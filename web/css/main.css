@@ -13,3 +13,8 @@ main {
   pointer-events: none;
   z-index: -1;
 }
+
+page-header {
+  --background: none;
+  --border-width: 0;
+}
