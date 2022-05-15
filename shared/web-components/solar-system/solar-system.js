@@ -90,12 +90,11 @@ class SolarSystem extends LitElement {
     this.renderer.addBody({
       name,
       position,
-      size,
+      radius,
       color,
       texture,
     });
   }
-
 }
 
 customElements.define(`solar-system`, SolarSystem);
