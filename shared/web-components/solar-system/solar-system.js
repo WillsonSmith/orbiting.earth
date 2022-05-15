@@ -87,17 +87,16 @@ class SolarSystem extends LitElement {
 
   handleBodyAdded(event) {
     const {name, position, size, color, texture} = event.detail;
-    this.renderer.add({
+    this.renderer.addBody({
       name,
       position,
       size,
       color,
       texture,
     });
-  }
-  handleBodyRemoved(event) {
-    const {name} = event.detail;
-    this.renderer.remove(name);
+    this.renderer.removeBody({
+      name: `sun`,
+    });
   }
 
 }
