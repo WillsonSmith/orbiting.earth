@@ -4,7 +4,8 @@ class StarSheet extends LitElement {
   static get properties() {
     return {
       seed: { type: Number },
-      starCount: { type: Number, attribure: `star-count` },
+      starDensity: { type: Number, attribute: `star-density` },
+      starCount: { type: Number },
       stars: { type: Array },
     };
   }
@@ -13,6 +14,7 @@ class StarSheet extends LitElement {
     super();
     this.seed = Date.now();
     this.rng = seededPseudoRandom(this.seed);
+    this.starDensity = 20;
   }
 
   firstUpdated() {
@@ -40,7 +42,6 @@ class StarSheet extends LitElement {
       this.canvas.height = this.offsetHeight * window.devicePixelRatio;
       this.canvas.style.width = `${this.offsetWidth}px`;
       this.canvas.style.height = `${this.offsetHeight}px`;
-      this.starCount = (this.offsetWidth / 100) * 20;
       this.rng = seededPseudoRandom(this.seed);
       this._generateStars();
 
@@ -72,7 +73,7 @@ class StarSheet extends LitElement {
   }
 
   _generateStars() {
-    this.starCount = (this.offsetWidth / 100) * 2;
+    this.starCount = (this.offsetWidth / 100) * this.starDensity;
     this.stars = [];
     for (let i = 0; i < this.starCount; i++) {
       this.stars.push({
