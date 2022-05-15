@@ -6,8 +6,8 @@ class SolarSystemBody extends LitElement {
   static get properties() {
     return {
       name: {type: String},
-      x: {type: Number},
-      y: {type: Number},
+      x: {type: Number, attribute: `x-position`},
+      y: {type: Number, attribute: `y-position`},
       radius: {type: Number},
       color: {type: String},
       texture: {type: String},
