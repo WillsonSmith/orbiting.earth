@@ -14,6 +14,7 @@ class PageHeader extends LitElement {
   static get properties() {
     return {
       title: { type: String },
+      noStars: { type: Boolean, attribute: `no-stars` },
     };
   }
 
@@ -21,17 +22,19 @@ class PageHeader extends LitElement {
     return css`
       :host {
         --font-family: 'Fredoka', var(--sl-font-sans), sans-serif;
+        --border-width: 1px;
+        --background: var(--sl-color-neutral-0);
       }
 
       .header {
-        background: var(--sl-color-neutral-0);
+        background: var(--background);
         position: sticky;
         top: 0;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        border-bottom: 1px solid var(--sl-color-neutral-300);
+        border-bottom: var(--border-width) solid var(--sl-color-neutral-300);
         padding: var(--sl-spacing-x-small) var(--sl-spacing-small);
 
         z-index: 1;
@@ -86,9 +89,10 @@ class PageHeader extends LitElement {
   }
 
   render() {
+    const starSheet = this.noStars ? `` : html`<star-sheet star-density="2"></star-sheet>`;
     return html`
       <header class="header">
-        <star-sheet></star-sheet>
+        ${starSheet}
         <h1 class="header-title">
           <slot name="title"></slot>
         </h1>
