@@ -54,20 +54,19 @@ class SolarSystem extends LitElement {
 }
 
 
+
 class RenderController {
   constructor(host, {engine, version}) {
     (this.host = host).addController(this);
     this._bodies = new Map();
-    console.log(engine, version);
     this.engine = engine;
     this.version = version;
   }
   hostConnected() {
-    console.log(`Renderrer connected: ${this.engine} • ${this.version}`);
-    console.log(`host connected to render controller`);
+    console.log(this._renderConnectedLog(this.engine, this.version));
   }
   hostDisconnected() {
-    console.log(`host disconnected from render controller`);
+    console.log(`Host • disconnected`);
   }
 
   addBody(body) {
@@ -81,6 +80,10 @@ class RenderController {
   }
 
   renderBodies() {}
+
+  _renderConnectedLog (engine, version) {
+    return (`Renderrer • Connected`, {engine, version});
+  }
 }
 
 customElements.define(`solar-system`, SolarSystem);
