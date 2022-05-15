@@ -94,9 +94,6 @@ class SolarSystem extends LitElement {
       color,
       texture,
     });
-    this.renderer.removeBody({
-      name: `sun`,
-    });
   }
 
 }
