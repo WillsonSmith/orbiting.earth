@@ -46,9 +46,6 @@ class SolarSystem extends LitElement {
       color,
       texture,
     });
-    this.renderer.removeBody({
-      name: `sun`,
-    });
   }
 
 }
@@ -62,6 +59,7 @@ class RenderController {
     this.engine = engine;
     this.version = version;
   }
+
   hostConnected() {
     console.log(this._renderConnectedLog(this.engine, this.version));
   }
@@ -79,7 +77,15 @@ class RenderController {
     this.renderBodies();
   }
 
-  renderBodies() {}
+  renderBodies() {
+    if (this.engine === `canvas`) {
+      this.renderCanvas();
+    }
+  }
+
+  renderCanvas() {
+    console.log(`Renderrer • Rendering canvas`);
+  }
 
   _renderConnectedLog (engine, version) {
     return (`Renderrer • Connected`, {engine, version});
