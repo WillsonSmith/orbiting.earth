@@ -14,7 +14,7 @@ class SolarSystem extends LitElement {
 
   constructor() {
     super();
-    this.renderer = renderer({engine: `canvas`, version: `v0.5`});
+    this.renderer = new RenderController(this, {engine: `canvas`, version: `v0.5`});
   }
 
   connectedCallback() {
@@ -39,35 +39,48 @@ class SolarSystem extends LitElement {
 
   handleBodyAdded(event) {
     const {name, position, size, color, texture} = event.detail;
-    this.renderer.add({
+    this.renderer.addBody({
       name,
       position,
       size,
       color,
       texture,
     });
-  }
-  handleBodyRemoved(event) {
-    const {name} = event.detail;
-    this.renderer.remove(name);
+    this.renderer.removeBody({
+      name: `sun`,
+    });
   }
 
 }
 
-function renderer({engine, version}) {
-  console.log(`renderer: ${engine} ${version}`);
-  const bodies = {};
-  return {
-    add(body) {
-      bodies[body.name] = body;
-      console.log(`renderer: add ${body.name}`);
-    },
-    remove(name) {
-      bodies[name] = null;
-      delete bodies[name];
-      console.log(`renderer: remove ${name}`);
-    }
-  };
+
+class RenderController {
+  constructor(host, {engine, version}) {
+    (this.host = host).addController(this);
+    this._bodies = new Map();
+    console.log(engine, version);
+    this.engine = engine;
+    this.version = version;
+  }
+  hostConnected() {
+    console.log(`Renderrer connected: ${this.engine} • ${this.version}`);
+    console.log(`host connected to render controller`);
+  }
+  hostDisconnected() {
+    console.log(`host disconnected from render controller`);
+  }
+
+  addBody(body) {
+    this._bodies.set(body.name, body);
+    this.renderBodies();
+  }
+
+  removeBody(body) {
+    this._bodies.delete(body.name);
+    this.renderBodies();
+  }
+
+  renderBodies() {}
 }
 
 customElements.define(`solar-system`, SolarSystem);

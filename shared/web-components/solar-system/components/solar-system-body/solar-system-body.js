@@ -44,11 +44,12 @@ class SolarSystemBody extends LitElement {
   _dispatchEvent(eventName) {
     const bodyAddedEvent = new CustomEvent(eventName, {
       detail: {
+        color: this.color,
         name: this.name,
         position: this.position,
         size: this.size,
-        color: this.color,
         texture: this.texture,
+        element: this,
       },
       bubbles: true,
     });
