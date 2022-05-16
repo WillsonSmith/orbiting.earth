@@ -11,3 +11,4 @@ import '../../shared/web-components/star-sheet/star-sheet.js';
 import '../../shared/web-components/colorize-word/colorize-word.js';
 import '../../shared/web-components/solar-system/solar-system.js';
 
+import './components/orbiting-earth/orbiting-earth.js';
