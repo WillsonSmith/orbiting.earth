@@ -66,7 +66,6 @@ class OrbitingEarth extends LitElement {
           y-position=${this.earthPosition.y}
           radius="40"
           color="rgb(45, 120, 190)"
-          texture="/static/earth.jpg"
         > Earth • Position: 0.7 0.5 </solar-system-body>
         <solar-system-body
           name="moon"
@@ -76,7 +75,6 @@ class OrbitingEarth extends LitElement {
           y-position=${this.moonPosition.y}
           radius="10"
           color="rgb(255, 255, 255)"
-          texture="/static/moon.jpg"
           > Moon • Position: 0.55 0.55 </solar-system-body>
       </solar-system>
     `;

@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import './components/solar-system-body/solar-system-body.js';
 
-import {RenderController} from './renderController.js';
+import {RenderController} from './RenderController.js';
 class SolarSystem extends LitElement {
   static get properties() {
     return {
@@ -28,13 +28,10 @@ class SolarSystem extends LitElement {
 
   firstUpdated() {
     this.canvas = this.shadowRoot.querySelector(`canvas`);
-    this.renderer.canvas = this.canvas;
     this.context = this.canvas.getContext(`2d`);
     this.context.scale(window.devicePixelRatio, window.devicePixelRatio);
+    this.renderer.canvas = this.canvas;
     this.renderer.context = this.context;
-
-    this._resizeCanvas();
-    this._renderCanvas();
   }
 
   connectedCallback() {
@@ -43,8 +40,7 @@ class SolarSystem extends LitElement {
     this.addEventListener(`solar-system-body-changed`, this.handleBodyChanged);
 
     const resizeObserver = new ResizeObserver(() => {
-      this._resizeCanvas();
-      this._renderCanvas();
+      this.renderer.renderBodies({resize: true});
     });
     resizeObserver.observe(this);
 
@@ -79,29 +75,14 @@ class SolarSystem extends LitElement {
 
   handleBodyAdded(event) {
     this.renderer.addBody(event.detail);
-    this._renderCanvas();
   }
 
   handleBodyRemoved(name) {
     this.renderer.removeBody(name);
-    this._renderCanvas();
   }
 
   handleBodyChanged(event) {
     this.renderer.updateBody(event.detail);
-    this._renderCanvas();
-  }
-
-  _renderCanvas() {
-    this.renderer.renderBodies();
-  }
-
-  _resizeCanvas() {
-    if (!this.canvas) return;
-    this.canvas.width = this.offsetWidth * window.devicePixelRatio;
-    this.canvas.height = this.offsetHeight * window.devicePixelRatio;
-    this.canvas.style.width = `${this.offsetWidth}px`;
-    this.canvas.style.height = `${this.offsetHeight}px`;
   }
 }
 
