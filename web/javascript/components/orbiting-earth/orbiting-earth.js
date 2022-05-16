@@ -6,7 +6,7 @@ class OrbitingEarth extends LitElement {
     return {
       moonPosition: {type: Object},
       earthPosition: {type: Object},
-      playing: {type: Boolean, attribute: true},
+      playing: {type: Boolean, attribute: true, reflect: true},
     };
   }
   static get styles() {
@@ -25,22 +25,25 @@ class OrbitingEarth extends LitElement {
     super();
     this.playing = true;
     this.moonPosition = {x: 0.55, y: 0.55};
+  }
+
+  firstUpdated() {
     this.animationLoop = () => {
-      if (!this.playing) return;
-      const moonAngle = (Date.now() / 1000) * 0.1;
-      this.moonPosition = {
-        x: 0.7 + 0.1 * Math.cos(moonAngle),
-        y: 0.5 + 0.1 * Math.sin(moonAngle),
+      if (this.playing) {
+        const moonAngle = (Date.now() / 1000) * 0.1;
+        this.moonPosition = {
+          x: 0.7 + 0.1 * Math.cos(moonAngle),
+          y: 0.5 + 0.1 * Math.sin(moonAngle),
+        };
       };
       requestAnimationFrame(this.animationLoop);
     };
-    this.animationLoop();
+    requestAnimationFrame(this.animationLoop);
   }
 
   updated(changedProperties) {
     if (changedProperties.has(`playing`)) {
       console.log(`playing`);
-      
     }
   }
 
