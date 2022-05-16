@@ -89,7 +89,6 @@ class SolarSystem extends LitElement {
 
   handleBodyChanged(event) {
     this.renderer.updateBody(event.detail);
-    this._resizeCanvas();
     this._renderCanvas();
   }
 
