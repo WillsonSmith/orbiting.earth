@@ -108,11 +108,6 @@ class SolarSystem extends LitElement {
     this._renderCanvas();
   }
 
-
-  _handleResize() {
-    this._renderCanvas();
-  }
-
   _renderCanvas() {
     const canvas = this.shadowRoot.querySelector(`canvas`);
     if (!canvas) return;
