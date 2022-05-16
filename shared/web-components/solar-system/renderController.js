@@ -40,16 +40,7 @@ export class RenderController {
 
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       for (const body of this._bodies.values()) {
-        let {name, position, radius, color} = body;
-        
-        if (body.orbits) {
-          const orbitedBody = this._bodies.get(body.orbits);
-
-          position = {
-            x: orbitedBody.position.x + 0.1,
-            y: orbitedBody.position.y + 0.05,
-          };
-        }
+        let {position, radius, color} = body;
         
         const x = (position.x) * this.canvas.width / 2;
         const y = (position.y) * this.canvas.height / 2;
