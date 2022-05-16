@@ -9,6 +9,8 @@ class SolarSystemBody extends LitElement {
       x: {type: Number, attribute: `x-position`},
       y: {type: Number, attribute: `y-position`},
       radius: {type: Number},
+      orbits: {type: String},
+      orbitRadius: {type: Number, attribute: `orbit-radius`},
       color: {type: String},
       texture: {type: String},
     };
@@ -48,6 +50,8 @@ class SolarSystemBody extends LitElement {
         color: this.color,
         name: this.name,
         position: {x: this.x, y: this.y},
+        orbits: this.orbits,
+        orbitRadius: this.orbitRadius,
         radius: this.radius,
         texture: this.texture,
         element: this,

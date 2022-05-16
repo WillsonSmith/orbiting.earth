@@ -64,26 +64,13 @@ class SolarSystem extends LitElement {
   }
 
   handleBodyAdded(event) {
-    const {name, position, radius, color, texture} = event.detail;
-    this.renderer.addBody({
-      name,
-      position,
-      radius,
-      color,
-      texture,
-    });
+    // const {name, position, radius, color, texture} = event.detail;
+    this.renderer.addBody(event.detail);
     this._renderCanvas();
   }
 
   handleBodyChanged(event) {
-    const {name, position, radius, color, texture} = event.detail;
-    this.renderer.updateBody({
-      name,
-      position,
-      radius,
-      color,
-      texture,
-    });
+    this.renderer.updateBody(event.detail);
     this._renderCanvas();
   }
 
@@ -145,7 +132,17 @@ class RenderController {
 
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       for (const body of this._bodies.values()) {
-        const {position, radius, color} = body;
+        let {name, position, radius, color} = body;
+        
+        if (body.orbits) {
+          const orbitedBody = this._bodies.get(body.orbits);
+
+          position = {
+            x: orbitedBody.position.x + 0.1,
+            y: orbitedBody.position.y + 0.05,
+          };
+        }
+        
         const x = (position.x) * this.canvas.width / 2;
         const y = (position.y) * this.canvas.height / 2;
 
