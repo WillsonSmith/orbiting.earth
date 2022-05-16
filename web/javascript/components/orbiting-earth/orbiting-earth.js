@@ -33,12 +33,12 @@ class OrbitingEarth extends LitElement {
   firstUpdated() {
     this.animationLoop = () => {
       if (this.playing) {
-        const earthAngle = (Date.now() / 1000) * 0.1;
+        const earthAngle = (Date.now() / 1000) * ((Math.PI * 2) / 60);
         this.earthPosition = {
           x: this.sunPosition.x + 0.2 * Math.cos(earthAngle),
           y: this.sunPosition.y + 0.2 * Math.sin(earthAngle),
         };
-        const moonAngle = (Date.now() / 1000) * 0.4;
+        const moonAngle = earthAngle * 12;
         this.moonPosition = {
           x: this.earthPosition.x + 0.05 * Math.cos(moonAngle),
           y: this.earthPosition.y + 0.05 * Math.sin(moonAngle),
