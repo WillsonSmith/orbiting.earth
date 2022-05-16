@@ -104,6 +104,7 @@ class SolarSystem extends LitElement {
 
   handleBodyChanged(event) {
     this.renderer.updateBody(event.detail);
+    this._resizeCanvas();
     this._renderCanvas();
   }
 
@@ -120,6 +121,13 @@ class SolarSystem extends LitElement {
     canvas.style.width = `${this.offsetWidth}px`;
     canvas.style.height = `${this.offsetHeight}px`;
     canvas && this.renderer.renderBodies({canvas});
+  }
+
+  _resizeCanvas() {
+    this.canvas.width = this.offsetWidth * window.devicePixelRatio;
+    this.canvas.height = this.offsetHeight * window.devicePixelRatio;
+    this.canvas.style.width = `${this.offsetWidth}px`;
+    this.canvas.style.height = `${this.offsetHeight}px`;
   }
 }
 
