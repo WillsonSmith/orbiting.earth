@@ -14,6 +14,7 @@ class PageHeader extends LitElement {
   static get properties() {
     return {
       title: { type: String },
+      githubLink: { type: String, attribute: `github-link` },
       noStars: { type: Boolean, attribute: `no-stars` },
     };
   }
@@ -87,6 +88,7 @@ class PageHeader extends LitElement {
   constructor() {
     super();
     this.title = `Page Title`;
+    this.githubLink = `https://github.com/willsonsmith/willsonsmith.com`;
   }
 
   render() {
@@ -121,7 +123,7 @@ class PageHeader extends LitElement {
             <sl-icon-button
               name="github"
               label="GitHub"
-              href="https://github.com/willsonsmith/willsonsmith.com"
+              href=${this.githubLink}
               target="_blank"
             ></sl-icon-button>
           </sl-tooltip>
