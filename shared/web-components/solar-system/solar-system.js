@@ -94,13 +94,29 @@ class SolarSystem extends LitElement {
       color,
       texture,
     });
+    this._renderCanvas();
   }
+
+  handleBodyChanged(event) {
+    const {name, position, radius, color, texture} = event.detail;
+    this.renderer.updateBody({
+      name,
+      position,
+      radius,
+      color,
+      texture,
+    });
+    this._renderCanvas();
+  }
+
 
   _handleResize() {
     this._renderCanvas();
   }
+
   _renderCanvas() {
     const canvas = this.shadowRoot.querySelector(`canvas`);
+    if (!canvas) return;
     canvas.width = this.offsetWidth * window.devicePixelRatio;
     canvas.height = this.offsetHeight * window.devicePixelRatio;
     canvas.style.width = `${this.offsetWidth}px`;
