@@ -8,8 +8,7 @@ class OrbitingEarth extends LitElement {
       moonPosition: {type: Object},
       earthPosition: {type: Object},
       playing: {type: Boolean, attribute: true, reflect: true},
-      width: {type: Number},
-      height: {type: Number},
+      systemSize: {type: Object}
     };
   }
   static get styles() {
@@ -32,11 +31,27 @@ class OrbitingEarth extends LitElement {
     this.sunPosition = {x: 0.5, y: 0.5};
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    this.resizeObserver = new ResizeObserver(() => {
+      const system = this.shadowRoot.querySelector(`solar-system`);
+      this.systemSize = {width: system.offsetWidth, height: system.offsetHeight};
+    });
+    this.resizeObserver.observe(this);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.resizeObserver.disconnect();
+  }
+
   firstUpdated() {
+    const system = this.shadowRoot.querySelector(`solar-system`);
+    this.systemSize = {width: system.offsetWidth, height: system.offsetHeight};
     this.animationLoop = () => {
       if (this.playing) {
-        const oW = this.offsetWidth;
-        const oH = this.offsetHeight;
+        const oW = this.systemSize.width;
+        const oH = this.systemSize.height;
 
         const earthPositionInPixels = {
           x: this.sunPosition.x * oW + 50 + 20 + 50,
