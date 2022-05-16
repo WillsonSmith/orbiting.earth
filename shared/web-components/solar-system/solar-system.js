@@ -99,7 +99,6 @@ class SolarSystem extends LitElement {
 
   handleBodyRemoved(name) {
     this.renderer.removeBody(name);
-    this._renderCanvas();
   }
 
   handleBodyChanged(event) {
