@@ -29,6 +29,9 @@ class SolarSystem extends LitElement {
   firstUpdated() {
     this.canvas = this.shadowRoot.querySelector(`canvas`);
     this.renderer.canvas = this.canvas;
+    this.context = this.canvas.getContext(`2d`);
+    this.context.scale(window.devicePixelRatio, window.devicePixelRatio);
+    this.renderer.context = this.context;
 
     this._resizeCanvas();
     this._renderCanvas();
@@ -90,14 +93,8 @@ class SolarSystem extends LitElement {
     this._renderCanvas();
   }
 
-
-  _handleResize() {
-    this._renderCanvas();
-  }
-
   _renderCanvas() {
-    const canvas = this.shadowRoot.querySelector(`canvas`);
-    canvas && this.renderer.renderBodies();
+    this.renderer.renderBodies();
   }
 
   _resizeCanvas() {

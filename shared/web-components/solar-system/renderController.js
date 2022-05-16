@@ -34,16 +34,12 @@ export class RenderController {
 
   renderCanvas() {
     requestAnimationFrame(() => {
-      if (!this.canvas) return;
-      const ctx = this.canvas.getContext(`2d`);
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
+      const ctx = this.context;
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       for (const body of this._bodies.values()) {
         let {position, radius, color} = body;
-        
-        const x = (position.x) * this.canvas.width / 2;
-        const y = (position.y) * this.canvas.height / 2;
+        const x = (position.x) * this.canvas.width;
+        const y = (position.y) * this.canvas.height;
 
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, 2 * Math.PI);
