@@ -97,6 +97,11 @@ class SolarSystem extends LitElement {
     this._renderCanvas();
   }
 
+  handleBodyRemoved(name) {
+    this.renderer.removeBody(name);
+    this._renderCanvas();
+  }
+
   handleBodyChanged(event) {
     this.renderer.updateBody(event.detail);
     this._renderCanvas();
