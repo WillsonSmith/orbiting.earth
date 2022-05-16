@@ -97,7 +97,7 @@ class PageHeader extends LitElement {
         <h1 class="header-title">
           <slot name="title"></slot>
         </h1>
-        <nav class="header-social">
+        <nav class="social">
           <sl-dropdown>
             <sl-button slot="trigger" pill size="small" caret>
               <sl-icon name="moon" label="Select theme"></sl-icon>
