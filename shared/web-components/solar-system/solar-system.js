@@ -119,6 +119,7 @@ class SolarSystem extends LitElement {
   }
 
   _resizeCanvas() {
+    if (!this.canvas) return;
     this.canvas.width = this.offsetWidth * window.devicePixelRatio;
     this.canvas.height = this.offsetHeight * window.devicePixelRatio;
     this.canvas.style.width = `${this.offsetWidth}px`;

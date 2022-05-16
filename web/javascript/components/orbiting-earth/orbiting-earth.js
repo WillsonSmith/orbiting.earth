@@ -31,25 +31,15 @@ class OrbitingEarth extends LitElement {
   }
 
   firstUpdated() {
-    let moonAngle = 0;
-    let earthAngle = 0;
     this.animationLoop = () => {
       if (this.playing) {
-
-        // Update the moon position, get the x and y of earth, and set the moon position to be the same as earth.
-        this.moonPosition.x = this.earthPosition.x;
-        this.moonPosition.y = this.earthPosition.y;
-        
-        moonAngle += 0.01;
+        const moonAngle = (Date.now() / 1000) * 0.4;
         this.moonPosition = {
           x: this.earthPosition.x + 0.05 * Math.cos(moonAngle),
           y: this.earthPosition.y + 0.05 * Math.sin(moonAngle),
         };
 
-        // Update the earth position, get the x and y of the sun, and set the earth position to be the same as the sun.
-        this.earthPosition.x = this.sunPosition.x;
-        this.earthPosition.y = this.sunPosition.y;
-        earthAngle += 0.001;
+        const earthAngle = (Date.now() / 1000) * 0.1;
         this.earthPosition = {
           x: this.sunPosition.x + 0.2 * Math.cos(earthAngle),
           y: this.sunPosition.y + 0.2 * Math.sin(earthAngle),
