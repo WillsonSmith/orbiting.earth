@@ -8,6 +8,8 @@ class OrbitingEarth extends LitElement {
       moonPosition: {type: Object},
       earthPosition: {type: Object},
       playing: {type: Boolean, attribute: true, reflect: true},
+      width: {type: Number},
+      height: {type: Number},
     };
   }
   static get styles() {
@@ -33,15 +35,40 @@ class OrbitingEarth extends LitElement {
   firstUpdated() {
     this.animationLoop = () => {
       if (this.playing) {
+        const oW = this.offsetWidth;
+        const oH = this.offsetHeight;
+
+        const earthPositionInPixels = {
+          x: this.sunPosition.x * oW + 50 + 20 + 50,
+          y: this.sunPosition.y * oH + 50 + 20 + 50
+        };
+
+        const earthOffset = {
+          x: (earthPositionInPixels.x / oW) - this.sunPosition.x,
+          y: (earthPositionInPixels.y / oH) - this.sunPosition.y
+        };
+
         const earthAngle = (Date.now() / 1000) * ((Math.PI * 2) / 60);
         this.earthPosition = {
-          x: this.sunPosition.x + 0.2 * Math.cos(earthAngle),
-          y: this.sunPosition.y + 0.2 * Math.sin(earthAngle),
+          x: this.sunPosition.x + earthOffset.x * Math.cos(earthAngle),
+          y: this.sunPosition.y + earthOffset.y * Math.sin(earthAngle),
         };
+
+
+        const moonPositionInPixels = {
+          x: this.earthPosition.x * oW + 20 + 10,
+          y: this.earthPosition.y * oH + 20 + 10
+        };
+
+        const moonOffset = {
+          x: (moonPositionInPixels.x / oW) - this.earthPosition.x,
+          y: (moonPositionInPixels.y / oH) - this.earthPosition.y
+        };
+
         const moonAngle = earthAngle * 12;
         this.moonPosition = {
-          x: this.earthPosition.x + 0.05 * Math.cos(moonAngle),
-          y: this.earthPosition.y + 0.05 * Math.sin(moonAngle),
+          x: this.earthPosition.x + moonOffset.x * Math.cos(moonAngle),
+          y: this.earthPosition.y + moonOffset.y * Math.sin(moonAngle),
         };
       };
       requestAnimationFrame(this.animationLoop);
