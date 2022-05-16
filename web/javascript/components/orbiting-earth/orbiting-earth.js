@@ -41,13 +41,6 @@ class OrbitingEarth extends LitElement {
     requestAnimationFrame(this.animationLoop);
   }
 
-  updated(changedProperties) {
-    if (changedProperties.has(`playing`)) {
-      console.log(`playing`);
-    }
-  }
-
-  
   render() {
     return html`
     <solar-system>
@@ -57,7 +50,7 @@ class OrbitingEarth extends LitElement {
           y-position="0.5"
           radius="100"
           color="rgb(219, 169, 44)"
-        >Sun • Position: 0 0.5</solar-system-body>
+        > Sun • Position: 0 0.5 </solar-system-body>
         <solar-system-body
           name="earth"
           x-position="0.7"
@@ -65,7 +58,7 @@ class OrbitingEarth extends LitElement {
           radius="40"
           color="rgb(45, 120, 190)"
           texture="/static/earth.jpg"
-        > Earth • Position: 0.7 0.5</solar-system-body>
+        > Earth • Position: 0.7 0.5 </solar-system-body>
         <solar-system-body
           name="moon"
           orbits="earth"
@@ -75,7 +68,7 @@ class OrbitingEarth extends LitElement {
           radius="10"
           color="rgb(255, 255, 255)"
           texture="/static/moon.jpg"
-          > Moon • Position: 0.55 0.55</solar-system-body>
+          > Moon • Position: 0.55 0.55 </solar-system-body>
       </solar-system>
     `;
   }
