@@ -28,19 +28,12 @@ class SolarSystem extends LitElement {
   firstUpdated() {
     const canvas = this.shadowRoot.querySelector(`canvas`);
     this.renderer.canvas = canvas;
-
-    canvas && this.renderer.renderBodies({canvas});
-    console.log(this.offsetHeight, this.offsetWidth);
-    canvas.width = this.offsetWidth * window.devicePixelRatio;
-    canvas.height = this.offsetHeight * window.devicePixelRatio;
-    canvas.style.width = `${this.offsetWidth}px`;
-    canvas.style.height = `${this.offsetHeight}px`;
+    this._renderCanvas();
   }
 
   updated(changedProperties) {
     if (changedProperties.has(`renderer`)) {
-      const canvas = this.shadowRoot.querySelector(`canvas`);
-      canvas && this.renderer.renderBodies({canvas});
+      this._renderCanvas();
     }
   }
 
@@ -48,6 +41,11 @@ class SolarSystem extends LitElement {
     super.connectedCallback();
     this.addEventListener(`solar-system-body-added`, this.handleBodyAdded);
     this.addEventListener(`solar-system-body-removed`, this.handleBodyRemoved);
+
+    const resizeObserver = new ResizeObserver(() => {
+      this._renderCanvas();
+    });
+    resizeObserver.observe(this);
   }
 
   disconnectedCallback() {
@@ -73,6 +71,18 @@ class SolarSystem extends LitElement {
       texture,
     });
   }
+
+  _handleResize() {
+    this._renderCanvas();
+  }
+  _renderCanvas() {
+    const canvas = this.shadowRoot.querySelector(`canvas`);
+    canvas.width = this.offsetWidth * window.devicePixelRatio;
+    canvas.height = this.offsetHeight * window.devicePixelRatio;
+    canvas.style.width = `${this.offsetWidth}px`;
+    canvas.style.height = `${this.offsetHeight}px`;
+    canvas && this.renderer.renderBodies({canvas});
+  }
 }
 
 class RenderController {
@@ -85,8 +95,6 @@ class RenderController {
 
   hostConnected() {
     console.log(this._renderConnectedLog(this.engine, this.version));
-
-    console.log(this.canvas);
   }
   hostDisconnected() {
     console.log(`Host • disconnected`);
