@@ -33,6 +33,7 @@ class PageHeader extends LitElement {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
 
         border-bottom: var(--border-width) solid var(--sl-color-neutral-300);
         padding: var(--sl-spacing-x-small) var(--sl-spacing-small);
