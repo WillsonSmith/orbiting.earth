@@ -1,7 +1,7 @@
 <solar-system>
   <solar-system-body
     name="sun"
-    x-position="0"
+    x-position="0.5"
     y-position="0.5"
     radius="100"
     color="rgb(219, 169, 44)"
@@ -13,15 +13,13 @@
     radius="40"
     color="rgb(45, 120, 190)"
     texture="/static/earth.jpg"
-  > Earth • Position: 0 0 0 •</solar-system-body>
+  > Earth • Position: { x: 0.7, y: 0.5 } •</solar-system-body>
   <solar-system-body
     name="moon"
-    orbits="earth"
-    orbit-radius="10"
-    x-position=${this.moonPosition.x}
-    y-position=${this.moonPosition.y}
+    x-position="0.74"
+    y-position="0.52"
     radius="10"
     color="rgb(255, 255, 255)"
     texture="/static/moon.jpg"
-    > Moon • Position: 0 0 1</solar-system-body>
+    > Moon • Position: { x: 0.72, y: 0.52 } </solar-system-body>
 </solar-system>

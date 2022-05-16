@@ -23,7 +23,6 @@ class SolarSystemBody extends LitElement {
   }
 
   disconnectedCallback() {
-    console.log(`disconnect`);
     this._dispatchEvent(`solar-system-body-removed`);
     super.disconnectedCallback();
   }
