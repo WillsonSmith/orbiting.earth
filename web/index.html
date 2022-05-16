@@ -43,18 +43,28 @@
       <star-sheet class="space"></star-sheet>
       <solar-system>
         <solar-system-body
+          name="sun"
+          x-position="0"
+          y-position="0.5"
+          radius="100"
+          color="yellow"
+        />
+        <solar-system-body
           name="earth"
-          position="0,0,0"
-          size="1,1,1"
-          color="#00ff00"
+          x-position="0.5",
+          y-position="0.5",
+          radius="40",
+          color="rgb(45, 120, 190)"
           texture="/static/earth.jpg"
-        >Earth • Position: 0 0 0 •</solar-system-body>
+        > Earth • Position: 0 0 0 •</solar-system-body>
         <solar-system-body
           name="moon"
-          position="0,0,1"
-          size="0.5,0.5,0.5"
-          color="#ffffff"
-          texture="/static/moon.jpg">Moon • Position: 0 0 1</solar-system-body>
+          x-position="0.55",
+          y-position="0.55",
+          radius="10",
+          color="rgb(255, 255, 255)"
+          texture="/static/moon.jpg"
+          > Moon • Position: 0 0 1</solar-system-body>
       </solar-system>
     </main>
 

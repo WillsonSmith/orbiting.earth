@@ -95,6 +95,18 @@ class SolarSystem extends LitElement {
       texture,
     });
   }
+
+  _handleResize() {
+    this._renderCanvas();
+  }
+  _renderCanvas() {
+    const canvas = this.shadowRoot.querySelector(`canvas`);
+    canvas.width = this.offsetWidth * window.devicePixelRatio;
+    canvas.height = this.offsetHeight * window.devicePixelRatio;
+    canvas.style.width = `${this.offsetWidth}px`;
+    canvas.style.height = `${this.offsetHeight}px`;
+    canvas && this.renderer.renderBodies({canvas});
+  }
 }
 
 customElements.define(`solar-system`, SolarSystem);
