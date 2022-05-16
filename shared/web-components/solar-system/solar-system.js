@@ -98,14 +98,7 @@ class SolarSystem extends LitElement {
   }
 
   handleBodyChanged(event) {
-    const {name, position, radius, color, texture} = event.detail;
-    this.renderer.updateBody({
-      name,
-      position,
-      radius,
-      color,
-      texture,
-    });
+    this.renderer.updateBody(event.detail);
     this._renderCanvas();
   }
 
