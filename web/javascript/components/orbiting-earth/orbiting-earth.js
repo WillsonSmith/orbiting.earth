@@ -28,7 +28,9 @@ class OrbitingEarth extends LitElement {
     this.earthPosition = {x: 0.7, y: 0.5};
     this.sunPosition = {x: 0.5, y: 0.5};
 
-    const orbitRate = (Math.PI * 2) / 60;
+    const earthRadius = 40;
+    const earthDistanceToSun = 200;
+    const earthOrbitRate = (Math.PI * 2) / 60;
 
     this.bodies = [
       {
@@ -38,22 +40,85 @@ class OrbitingEarth extends LitElement {
         color: `rgb(219, 169, 44)`,
       },
       {
+        name: `mercury`,
+        orbits: `sun`,
+        orbitDistance: earthDistanceToSun * 0.445,
+        daysToOrbit: 88,
+        position: {x: 0, y: 0},
+        radius: earthRadius * 0.38,
+        color: `grey`,
+      },
+      {
+        name: `venus`,
+        orbits: `sun`,
+        orbitDistance: earthDistanceToSun * 0.723,
+        daysToOrbit: 255,
+        position: {x: 0, y: 0},
+        radius: earthRadius * 0.9,
+        color: `lightgrey`,
+      },
+      {
         name: `earth`,
         orbits: `sun`,
-        orbitDistance: 100,
-        orbitRate: orbitRate,
+        orbitDistance: earthDistanceToSun,
+        daysToOrbit: 365,
         position: {x: 0.7, y: 0.5},
-        radius: 40,
+        radius: earthRadius,
         color: `rgb(45, 120, 190)`,
       },
       {
         name: `moon`,
         orbits: `earth`,
-        orbitDistance: 10,
-        orbitRate: orbitRate * 12,
+        orbitDistance: earthDistanceToSun * 0.0055,
+        daysToOrbit: 365 / 12,
         position: {x: 0.55, y: 0.55},
-        radius: 10,
+        radius: earthRadius * 0.25,
         color: `rgb(255, 255, 255)`,
+      },
+      {
+        name: `mars`,
+        orbits: `sun`,
+        orbitDistance: earthDistanceToSun * 1.52,
+        daysToOrbit: 687,
+        position: {x: 0, y: 0},
+        radius: earthRadius * 0.5,
+        color: `orangered`,
+      },
+      {
+        name: `jupiter`,
+        orbits: `sun`,
+        orbitDistance: earthDistanceToSun * 11.2,
+        daysToOrbit: 4331,
+        position: {x: 0, y: 0},
+        radius: earthRadius * 11,
+        color: `orange`,
+      },
+      {
+        name: `saturn`,
+        orbits: `sun`,
+        orbitDistance: earthDistanceToSun * 9.5,
+        daysToOrbit: 10759,
+        position: {x: 0, y: 0},
+        radius: earthRadius * 1.5,
+        color: `orangeyellow`,
+      },
+      {
+        name: `uranus`,
+        orbits: `sun`,
+        orbitDistance: earthDistanceToSun * 19,
+        daysToOrbit: 30685,
+        position: {x: 0, y: 0},
+        radius: earthRadius * 0.8,
+        color: `lightblue`,
+      },
+      {
+        name: `neptune`,
+        orbits: `sun`,
+        orbitDistance: earthDistanceToSun * 30,
+        daysToOrbit: 60190,
+        position: {x: 0, y: 0},
+        radius: earthRadius * 0.6,
+        color: `blue`,
       }
     ];
   }
@@ -81,8 +146,9 @@ class OrbitingEarth extends LitElement {
         const oH = this.systemSize.height;
 
         const now = Date.now() / 1000;
+        const orbitRate = (Math.PI * 2) / 60;
         for (const body of this.bodies) {
-          const angle = now * body.orbitRate;
+          const angle = now * (365 / body.daysToOrbit * orbitRate);
           let position = {x: body.position.x, y: body.position.y};
           if (body.orbits) {
             const orbitedBody = this.bodies.find(b => b.name === body.orbits);
