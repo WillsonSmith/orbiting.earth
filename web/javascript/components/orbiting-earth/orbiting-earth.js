@@ -29,8 +29,7 @@ class OrbitingEarth extends LitElement {
     this.sunPosition = {x: 0.5, y: 0.5};
 
     const earthRadius = 40;
-    const earthDistanceToSun = 200;
-    const earthOrbitRate = (Math.PI * 2) / 60;
+    const earthDistanceToSun = 150;
 
     this.bodies = [
       {
@@ -121,6 +120,10 @@ class OrbitingEarth extends LitElement {
         color: `blue`,
       }
     ];
+    this.bodies.forEach(body => {
+      body.originalRadius = body.radius,
+      body.originalOrbitDistance = body.orbitDistance;
+    });
   }
 
   connectedCallback() {
