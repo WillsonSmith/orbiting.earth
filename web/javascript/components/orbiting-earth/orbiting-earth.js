@@ -29,7 +29,7 @@ class OrbitingEarth extends LitElement {
     this.sunPosition = {x: 0.5, y: 0.5};
 
     const earthRadius = 40;
-    const earthDistanceToSun = 150;
+    const earthDistanceToSun = 100;
 
     this.bodies = [
       {
@@ -68,7 +68,7 @@ class OrbitingEarth extends LitElement {
       {
         name: `moon`,
         orbits: `earth`,
-        orbitDistance: earthDistanceToSun * 0.0055,
+        orbitDistance: earthRadius * 0.38,
         daysToOrbit: 365 / 12,
         position: {x: 0.55, y: 0.55},
         radius: earthRadius * 0.25,
@@ -156,8 +156,8 @@ class OrbitingEarth extends LitElement {
           if (body.orbits) {
             const orbitedBody = this.bodies.find(b => b.name === body.orbits);
             const bodyPixelPosition = {
-              x: (orbitedBody.position.x * oW) + orbitedBody.radius + body.orbitDistance,
-              y: (orbitedBody.position.y * oH) + orbitedBody.radius + body.orbitDistance,
+              x: (orbitedBody.position.x * oW) + orbitedBody.radius  / 2+ body.orbitDistance,
+              y: (orbitedBody.position.y * oH) + orbitedBody.radius / 2 + body.orbitDistance,
             };
             const offset = {
               x: (bodyPixelPosition.x / oW) - orbitedBody.position.x,
