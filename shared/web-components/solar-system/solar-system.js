@@ -84,45 +84,6 @@ class SolarSystem extends LitElement {
   handleBodyChanged(event) {
     this.renderer.updateBody(event.detail);
   }
-
-  handleBodyAdded(event) {
-    const {name, position, radius, color, texture} = event.detail;
-    this.renderer.addBody({
-      name,
-      position,
-      radius,
-      color,
-      texture,
-    });
-    this._renderCanvas();
-  }
-
-  handleBodyRemoved(name) {
-    this.renderer.removeBody(name);
-  }
-
-  handleBodyChanged(event) {
-    this.renderer.updateBody(event.detail);
-    this._renderCanvas();
-  }
-
-  _renderCanvas() {
-    const canvas = this.shadowRoot.querySelector(`canvas`);
-    if (!canvas) return;
-    canvas.width = this.offsetWidth * window.devicePixelRatio;
-    canvas.height = this.offsetHeight * window.devicePixelRatio;
-    canvas.style.width = `${this.offsetWidth}px`;
-    canvas.style.height = `${this.offsetHeight}px`;
-    canvas && this.renderer.renderBodies({canvas});
-  }
-
-  _resizeCanvas() {
-    if (!this.canvas) return;
-    this.canvas.width = this.offsetWidth * window.devicePixelRatio;
-    this.canvas.height = this.offsetHeight * window.devicePixelRatio;
-    this.canvas.style.width = `${this.offsetWidth}px`;
-    this.canvas.style.height = `${this.offsetHeight}px`;
-  }
 }
 
 customElements.define(`solar-system`, SolarSystem);
