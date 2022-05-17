@@ -68,7 +68,7 @@ class OrbitingEarth extends LitElement {
       {
         name: `moon`,
         orbits: `earth`,
-        orbitDistance: earthRadius * 0.38,
+        orbitDistance: earthRadius * 0.2,
         daysToOrbit: 365 / 12,
         position: {x: 0.55, y: 0.55},
         radius: earthRadius * 0.25,
