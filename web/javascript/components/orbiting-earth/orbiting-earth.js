@@ -4,11 +4,9 @@ import '../../../../shared/web-components/solar-system/solar-system.js';
 class OrbitingEarth extends LitElement {
   static get properties() {
     return {
-      sunPosition: {type: Object},
-      moonPosition: {type: Object},
-      earthPosition: {type: Object},
       playing: {type: Boolean, attribute: true, reflect: true},
-      systemSize: {type: Object}
+      systemSize: {type: Object},
+      bodies: {type: Array},
     };
   }
   static get styles() {
@@ -29,6 +27,35 @@ class OrbitingEarth extends LitElement {
     this.moonPosition = {x: 0.55, y: 0.55};
     this.earthPosition = {x: 0.7, y: 0.5};
     this.sunPosition = {x: 0.5, y: 0.5};
+
+    const orbitRate = (Math.PI * 2) / 60;
+
+    this.bodies = [
+      {
+        name: `sun`,
+        position: {x: 0.5, y: 0.5},
+        radius: 100,
+        color: `rgb(219, 169, 44)`,
+      },
+      {
+        name: `earth`,
+        orbits: `sun`,
+        orbitDistance: 100,
+        orbitRate: orbitRate,
+        position: {x: 0.7, y: 0.5},
+        radius: 40,
+        color: `rgb(45, 120, 190)`,
+      },
+      {
+        name: `moon`,
+        orbits: `earth`,
+        orbitDistance: 10,
+        orbitRate: orbitRate * 12,
+        position: {x: 0.55, y: 0.55},
+        radius: 10,
+        color: `rgb(255, 255, 255)`,
+      }
+    ];
   }
 
   connectedCallback() {
@@ -53,38 +80,28 @@ class OrbitingEarth extends LitElement {
         const oW = this.systemSize.width;
         const oH = this.systemSize.height;
 
-        const earthPositionInPixels = {
-          x: this.sunPosition.x * oW + 50 + 20 + 50,
-          y: this.sunPosition.y * oH + 50 + 20 + 50
-        };
-
-        const earthOffset = {
-          x: (earthPositionInPixels.x / oW) - this.sunPosition.x,
-          y: (earthPositionInPixels.y / oH) - this.sunPosition.y
-        };
-
-        const earthAngle = (Date.now() / 1000) * ((Math.PI * 2) / 60);
-        this.earthPosition = {
-          x: this.sunPosition.x + earthOffset.x * Math.cos(earthAngle),
-          y: this.sunPosition.y + earthOffset.y * Math.sin(earthAngle),
-        };
-
-
-        const moonPositionInPixels = {
-          x: this.earthPosition.x * oW + 20 + 10,
-          y: this.earthPosition.y * oH + 20 + 10
-        };
-
-        const moonOffset = {
-          x: (moonPositionInPixels.x / oW) - this.earthPosition.x,
-          y: (moonPositionInPixels.y / oH) - this.earthPosition.y
-        };
-
-        const moonAngle = earthAngle * 12;
-        this.moonPosition = {
-          x: this.earthPosition.x + moonOffset.x * Math.cos(moonAngle),
-          y: this.earthPosition.y + moonOffset.y * Math.sin(moonAngle),
-        };
+        const now = Date.now() / 1000;
+        for (const body of this.bodies) {
+          const angle = now * body.orbitRate;
+          let position = {x: body.position.x, y: body.position.y};
+          if (body.orbits) {
+            const orbitedBody = this.bodies.find(b => b.name === body.orbits);
+            const bodyPixelPosition = {
+              x: (orbitedBody.position.x * oW) + orbitedBody.radius + body.orbitDistance,
+              y: (orbitedBody.position.y * oH) + orbitedBody.radius + body.orbitDistance,
+            };
+            const offset = {
+              x: (bodyPixelPosition.x / oW) - orbitedBody.position.x,
+              y: (bodyPixelPosition.y / oH) - orbitedBody.position.y,
+            };
+            
+            position.x = orbitedBody.position.x + offset.x * Math.cos(angle);
+            position.y = orbitedBody.position.y + offset.y * Math.sin(angle);
+            
+          }
+          body.position = position;
+        }
+        this.bodies = [...this.bodies];
       };
       requestAnimationFrame(this.animationLoop);
     };
@@ -94,29 +111,15 @@ class OrbitingEarth extends LitElement {
   render() {
     return html`
     <solar-system>
+      ${this.bodies.map(body => html`
         <solar-system-body
-          name="sun"
-          x-position=${this.sunPosition.x}
-          y-position=${this.sunPosition.y}
-          radius="100"
-          color="rgb(219, 169, 44)"
-        > Sun • Position: 0 0.5 </solar-system-body>
-        <solar-system-body
-          name="earth"
-          x-position=${this.earthPosition.x}
-          y-position=${this.earthPosition.y}
-          radius="40"
-          color="rgb(45, 120, 190)"
-        > Earth • Position: 0.7 0.5 </solar-system-body>
-        <solar-system-body
-          name="moon"
-          orbits="earth"
-          orbit-radius="10"
-          x-position=${this.moonPosition.x}
-          y-position=${this.moonPosition.y}
-          radius="10"
-          color="rgb(255, 255, 255)"
-          > Moon • Position: 0.55 0.55 </solar-system-body>
+          name="${body.name}"
+          x-position="${body.position.x}"
+          y-position="${body.position.y}"
+          radius="${body.radius}"
+          color="${body.color}"
+        ></solar-system-body>
+      `)}
       </solar-system>
     `;
   }
